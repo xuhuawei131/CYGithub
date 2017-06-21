@@ -12,11 +12,12 @@ import com.github.util.Utils
  */
 class App : Application() {
 
-    private var mAllActivities: MutableSet<Activity>? = null
+    private val mAllActivities: MutableSet<Activity> = mutableSetOf<Activity>()
 
     override fun onCreate() {
         super.onCreate()
 
+        //判断程序是否重复启动
         var isApplicationRepeat = Utils.isApplicationRepeat(this);
         if (isApplicationRepeat) {
             return
@@ -28,13 +29,31 @@ class App : Application() {
         MultiDex.install(this)
     }
 
+    /**
+     * 保存Activity的引用
+     */
     fun addActivity(act: Activity) {
+        mAllActivities.add(act)
+    }
 
-        if (mAllActivities == null) {
-            mAllActivities = mutableSetOf<Activity>()
+    /**
+     * 清除Activity的引用
+     */
+    fun removeActivity(act: Activity) {
+        mAllActivities.remove(act)
+    }
+
+    /**
+     * 退出App
+     */
+    fun exitApp() {
+        synchronized(mAllActivities) {
+            for (act in mAllActivities) {
+                act.finish()
+            }
         }
-
-        LogUtil.e("abc", "size-->" + mAllActivities!!.size)
+        android.os.Process.killProcess(android.os.Process.myPid())
+        System.exit(0)
     }
 
 }
