@@ -1,4 +1,4 @@
-package com.github.base
+package com.github.model.http
 
 /**
  * Created by cuiyue on 2017/6/22.

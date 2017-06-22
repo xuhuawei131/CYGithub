@@ -4,6 +4,7 @@ import android.os.Bundle
 import client.yalantis.com.githubclient.model.Repository
 import com.github.R
 import com.github.base.BaseActivity
+import com.github.log.LogUtil
 import com.github.presenter.contract.RepositoriesContract
 import com.github.presenter.impl.RepositoriesPresenter
 
@@ -43,8 +44,7 @@ class MainActivity : BaseActivity<RepositoriesContract.View, RepositoriesPresent
     }
 
     override fun showRepositories(repositories: MutableList<Repository>) {
-
-
+        LogUtil.d("abc", "showRepositories-->" + repositories.size)
 
     }
 

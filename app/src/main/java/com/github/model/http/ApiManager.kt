@@ -4,7 +4,6 @@ package com.github.model.http
 import client.yalantis.com.githubclient.model.Repository
 import client.yalantis.com.githubclient.model.RepositoryDetail
 import com.github.BuildConfig
-import com.github.log.LogUtil
 import com.github.log.okHttpLog.HttpLoggingInterceptorM
 import com.github.log.okHttpLog.LogInterceptor
 import com.github.util.Utils
@@ -94,9 +93,6 @@ object ApiManager {
         //错误重连
         builder.retryOnConnectionFailure(true)
         var okHttpClient = builder.build()
-
-        LogUtil.d("abc", "initRetrofit")
-
         return Retrofit.Builder().baseUrl(SERVER)
                 .client(okHttpClient)
                 .addConverterFactory(createGsonConverter())
@@ -106,7 +102,6 @@ object ApiManager {
 
     private fun initServices(retrofit: Retrofit) {
         mApiService = retrofit.create(ApiService::class.java)
-        LogUtil.d("abc", "initServices")
     }
 
     private fun createGsonConverter(): GsonConverterFactory {
@@ -115,10 +110,6 @@ object ApiManager {
     }
 
     fun loadOrganizationRepos(organizationName: String, reposType: String): Flowable<MutableList<Repository>> {
-        LogUtil.d("abc", "loadOrganizationRepos")
-        if (mApiService == null) {
-            LogUtil.d("abc", "mApiService == null")
-        }
         return mApiService.getOrganizationRepos(organizationName, reposType)
     }
 

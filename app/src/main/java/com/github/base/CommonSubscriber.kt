@@ -2,6 +2,7 @@ package com.github.base
 
 import android.text.TextUtils
 import com.github.log.LogUtil
+import com.github.model.http.ApiException
 import io.reactivex.subscribers.ResourceSubscriber
 import retrofit2.HttpException
 
