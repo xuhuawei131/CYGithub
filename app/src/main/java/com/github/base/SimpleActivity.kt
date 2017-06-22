@@ -12,23 +12,21 @@ import org.greenrobot.eventbus.Subscribe
  */
 abstract class SimpleActivity : SupportActivity() {
 
-    protected val mContext: Activity = this
+    protected val mActivity: Activity = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
-        var app = applicationContext as App
-        app.addActivity(mContext)
-        EventBus.getDefault().register(this)
+        App.instance.addActivity(mActivity)
+        EventBus.getDefault().register(mActivity)
         initView()
         initData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().unregister(mContext)
-        var app = applicationContext as App
-        app.removeActivity(mContext)
+        EventBus.getDefault().unregister(mActivity)
+        App.instance.removeActivity(mActivity)
     }
 
     /**

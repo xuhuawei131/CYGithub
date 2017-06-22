@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex
 import com.github.BuildConfig
 import com.github.log.LogUtil
 import com.github.util.Utils
+import kotlin.properties.Delegates
 
 /**
  * Created by cuiyue on 2017/6/21.
@@ -13,6 +14,10 @@ import com.github.util.Utils
 class App : Application() {
 
     private val mAllActivities: MutableSet<Activity> = mutableSetOf<Activity>()
+
+    companion object {
+        var instance: App by Delegates.notNull()
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -22,7 +27,7 @@ class App : Application() {
         if (isApplicationRepeat) {
             return
         }
-
+        instance = this
         //初始化Logger的TAG
         LogUtil.init(BuildConfig.DEBUG)
         // dex突破65535的限制
