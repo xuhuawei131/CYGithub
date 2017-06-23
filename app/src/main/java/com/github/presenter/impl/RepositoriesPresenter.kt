@@ -8,6 +8,7 @@ import com.github.model.http.GitHubResponse
 import com.github.model.http.MyHttpResponse
 import com.github.presenter.contract.RepositoriesContract
 import com.github.util.RxUtil
+import com.wingsofts.gankclient.bean.JsonResult
 
 /**
  * Created by cuiyue on 2017/6/21.
@@ -20,29 +21,13 @@ class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), Reposito
     }
 
     override fun loadRepositories() {
-
-
         addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE)
-                .compose(RxUtil.rxSchedulerHelper<GitHubResponse<MutableList<Repository>>>())
-                .compose(RxUtil.handleResult<MutableList<Repository>>())
+                .compose(RxUtil.rxSchedulerHelper())
                 .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
-                    override fun onNext(repositorys: MutableList<Repository>) {
-                        mView?.showRepositories(repositorys)
+                    override fun onNext(t: MutableList<Repository>) {
+                        mView?.showRepositories(t)
                     }
                 }))
-
-//        var disposable = ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE)
-//                .compose(RxUtil.rxSchedulerHelper())
-//                .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
-//                    override fun onNext(repositorys: MutableList<Repository>) {
-//                        mView?.showRepositories(repositorys)
-//                    }
-//
-//                    override fun onError(e: Throwable?) {
-//                        super.onError(e)
-//                    }
-//                })
-//        addDisposable(disposable)
     }
 
 

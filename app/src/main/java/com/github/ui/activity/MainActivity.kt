@@ -39,18 +39,21 @@ class MainActivity : BaseActivity<RepositoriesContract.View, RepositoriesPresent
     override fun hideProgress() {
     }
 
+    override fun showRepositories(repositories: MutableList<Repository>) {
+        LogUtil.d("abc", "showRepositories-->" + repositories.size)
+
+    }
+
     override fun showError() {
+        LogUtil.d("abc", "showError-->")
     }
 
     override fun showErrorMsg(msg: String) {
+        LogUtil.d("abc", "showErrorMsg-->" + msg)
     }
 
     override fun showEmpty() {
     }
 
-    override fun showRepositories(repositories: MutableList<Repository>) {
-        LogUtil.d("abc", "showRepositories-->" + repositories.size)
-
-    }
 
 }

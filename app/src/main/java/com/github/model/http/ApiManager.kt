@@ -8,6 +8,7 @@ import com.github.log.okHttpLog.HttpLoggingInterceptorM
 import com.github.log.okHttpLog.LogInterceptor
 import com.github.util.Utils
 import com.google.gson.GsonBuilder
+import com.wingsofts.gankclient.bean.JsonResult
 import io.reactivex.Flowable
 import okhttp3.Cache
 import okhttp3.CacheControl
@@ -109,7 +110,7 @@ object ApiManager {
         return GsonConverterFactory.create(builder.create())
     }
 
-    fun loadOrganizationRepos(organizationName: String, reposType: String): Flowable<GitHubResponse<MutableList<Repository>>> {
+    fun loadOrganizationRepos(organizationName: String, reposType: String): Flowable<MutableList<Repository>> {
         return mApiService.getOrganizationRepos(organizationName, reposType)
     }
 

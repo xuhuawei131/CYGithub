@@ -6,6 +6,7 @@ import com.github.log.LogUtil
 import com.github.model.http.ApiException
 import com.github.model.http.GitHubResponse
 import com.github.model.http.MyHttpResponse
+import com.wingsofts.gankclient.bean.JsonResult
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function
@@ -28,13 +29,15 @@ object RxUtil {
         }
     }
 
-    fun <T> handleResult(): FlowableTransformer<GitHubResponse<T>, T> {
-        return FlowableTransformer<GitHubResponse<T>, T> {
+    fun <T> handleResult(): FlowableTransformer<JsonResult<T>, T> {
+        return FlowableTransformer<JsonResult<T>, T> {
             it.flatMap {
-                if (it.t == null) {
+                if (it.results == null) {
+                    LogUtil.d("abc", "服务器返回error")
                     Flowable.error(ApiException("服务器返回error"));
                 } else {
-                    createData(it.t)
+                    LogUtil.d("abc", "createData")
+                    createData(it.results)
                 }
             }
         }
@@ -47,21 +50,16 @@ object RxUtil {
      * @return
     </T> */
     fun <T> createData(t: T): Flowable<T> {
-
-
-
-        return Flowable.create(FlowableOnSubscribe<T>(){
-
+        return Flowable.create({ emitter ->
+            try {
+                emitter.onNext(t)
+                emitter.onComplete()
+                LogUtil.d("abc", "createData--onNext")
+            } catch (e: Exception) {
+                LogUtil.d("abc", "createData--onError")
+                emitter.onError(e)
+            }
         }, BackpressureStrategy.BUFFER)
-
-//        return Flowable.create({ emitter ->
-//            try {
-//                emitter.onNext(t)
-//                emitter.onComplete()
-//            } catch (e: Exception) {
-//                emitter.onError(e)
-//            }
-//        }, BackpressureStrategy.BUFFER)
     }
 
 }

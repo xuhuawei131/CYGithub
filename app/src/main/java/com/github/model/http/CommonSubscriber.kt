@@ -1,6 +1,7 @@
 package com.github.model.http
 
 import android.text.TextUtils
+import android.util.Log
 import com.github.base.BaseView
 import com.github.log.LogUtil
 import io.reactivex.subscribers.ResourceSubscriber
@@ -35,12 +36,14 @@ abstract class CommonSubscriber<T> : ResourceSubscriber<T> {
         this.isShowErrorState = isShowErrorState
     }
 
+    override fun onNext(t: T) {
+    }
 
     override fun onComplete() {
-
     }
 
     override fun onError(e: Throwable?) {
+
         if (mView == null) {
             return
         }
@@ -52,7 +55,6 @@ abstract class CommonSubscriber<T> : ResourceSubscriber<T> {
             mView.showErrorMsg("数据加载失败ヽ(≧Д≦)ノ")
         } else {
             mView.showErrorMsg("未知错误ヽ(≧Д≦)ノ")
-            LogUtil.d(e.toString())
         }
         if (isShowErrorState) {
             mView.showError()
