@@ -14,7 +14,7 @@ interface ApiService {
 
     @GET(ApiSettings.ORGANIZATION_REPOS)
     fun getOrganizationRepos(@Path(ApiSettings.PATH_ORGANIZATION) organizationName: String,
-                             @Query(ApiSettings.PARAM_REPOS_TYPE) reposType: String): Flowable<MutableList<Repository>>
+                             @Query(ApiSettings.PARAM_REPOS_TYPE) reposType: String): Flowable<GitHubResponse<MutableList<Repository>>>
 
     @GET(ApiSettings.REPOSITORY)
     fun getRepository(@Path(ApiSettings.PATH_OWNER) owner: String,

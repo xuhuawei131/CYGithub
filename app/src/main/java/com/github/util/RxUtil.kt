@@ -6,9 +6,7 @@ import com.github.log.LogUtil
 import com.github.model.http.ApiException
 import com.github.model.http.GitHubResponse
 import com.github.model.http.MyHttpResponse
-import io.reactivex.Flowable
-import io.reactivex.FlowableTransformer
-import io.reactivex.Observable
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
@@ -25,34 +23,45 @@ object RxUtil {
      * @return
     </T> */
     fun <T> rxSchedulerHelper(): FlowableTransformer<T, T> {    //compose简化线程
-        var flowableTransformer = object : FlowableTransformer<T, T> {
-            override fun apply(upstream: Flowable<T>?): Publisher<T> {
-                return upstream?.subscribeOn(Schedulers.io())
-                        ?.observeOn(AndroidSchedulers.mainThread())!!
-            }
+        return FlowableTransformer<T, T> {
+            it.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         }
-        return flowableTransformer
-
     }
 
+    fun <T> handleResult(): FlowableTransformer<GitHubResponse<T>, T> {
+        return FlowableTransformer<GitHubResponse<T>, T> {
+            it.flatMap {
+                if (it.t == null) {
+                    Flowable.error(ApiException("服务器返回error"));
+                } else {
+                    createData(it.t)
+                }
+            }
+        }
+    }
 
-//    public static <T> FlowableTransformer<GoldHttpResponse<T>, T> handleGoldResult() {   //compose判断结果
-//        return new FlowableTransformer<GoldHttpResponse<T>, T>() {
-//            @Override
-//            public Flowable<T> apply(Flowable<GoldHttpResponse<T>> httpResponseFlowable) {
-//                return httpResponseFlowable.flatMap(new Function<GoldHttpResponse<T>, Flowable<T>>() {
-//                    @Override
-//                    public Flowable<T> apply(GoldHttpResponse<T> tGoldHttpResponse) {
-//                        if(tGoldHttpResponse.getResults() != null) {
-//                            return createData(tGoldHttpResponse.getResults());
-//                        } else {
-//                            return Flowable.error(new ApiException("服务器返回error"));
-//                        }
-//                    }
-//                });
+    /**
+     * 生成Flowable
+     * @param <T>
+     * *
+     * @return
+    </T> */
+    fun <T> createData(t: T): Flowable<T> {
+
+
+
+        return Flowable.create(FlowableOnSubscribe<T>(){
+
+        }, BackpressureStrategy.BUFFER)
+
+//        return Flowable.create({ emitter ->
+//            try {
+//                emitter.onNext(t)
+//                emitter.onComplete()
+//            } catch (e: Exception) {
+//                emitter.onError(e)
 //            }
-//        };
-//    }
-
+//        }, BackpressureStrategy.BUFFER)
+    }
 
 }

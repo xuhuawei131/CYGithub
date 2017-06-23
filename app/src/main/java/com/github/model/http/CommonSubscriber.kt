@@ -1,8 +1,8 @@
-package com.github.base
+package com.github.model.http
 
 import android.text.TextUtils
+import com.github.base.BaseView
 import com.github.log.LogUtil
-import com.github.model.http.ApiException
 import io.reactivex.subscribers.ResourceSubscriber
 import retrofit2.HttpException
 

@@ -1,12 +1,16 @@
 package com.github.ui.activity
 
 import android.os.Bundle
+import android.view.View
+import client.yalantis.com.githubclient.model.Owner
 import client.yalantis.com.githubclient.model.Repository
 import com.github.R
 import com.github.base.BaseActivity
 import com.github.log.LogUtil
+import com.github.model.http.GitHubResponse
 import com.github.presenter.contract.RepositoriesContract
 import com.github.presenter.impl.RepositoriesPresenter
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<RepositoriesContract.View, RepositoriesPresenter>(), RepositoriesContract.View {
 
@@ -22,6 +26,7 @@ class MainActivity : BaseActivity<RepositoriesContract.View, RepositoriesPresent
     }
 
     override fun initView() {
+        tv.setText("hahaha")
     }
 
     override fun initData() {
@@ -47,6 +52,5 @@ class MainActivity : BaseActivity<RepositoriesContract.View, RepositoriesPresent
         LogUtil.d("abc", "showRepositories-->" + repositories.size)
 
     }
-
 
 }

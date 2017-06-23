@@ -109,7 +109,7 @@ object ApiManager {
         return GsonConverterFactory.create(builder.create())
     }
 
-    fun loadOrganizationRepos(organizationName: String, reposType: String): Flowable<MutableList<Repository>> {
+    fun loadOrganizationRepos(organizationName: String, reposType: String): Flowable<GitHubResponse<MutableList<Repository>>> {
         return mApiService.getOrganizationRepos(organizationName, reposType)
     }
 

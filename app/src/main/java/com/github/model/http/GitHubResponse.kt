@@ -1,3 +1,14 @@
 package com.github.model.http
 
-data class GitHubResponse<T>(val results: T)
+
+class GitHubResponse<T> {
+    var t: T? = null
+
+    fun getResults(): T {
+        return t!!
+    }
+
+    fun setResults(results: T) {
+        this.t = t
+    }
+}

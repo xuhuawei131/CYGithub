@@ -284,9 +284,11 @@ public class LogUtil {
                 }
             }
             return stringBuilder.toString();
-        } else {
+        } else if (objects.length == 1) {
             Object object = objects[0];
             return object == null ? NULL : object.toString();
+        } else {
+            return NULL;
         }
     }
 }
