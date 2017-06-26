@@ -1,4 +1,4 @@
-package com.github.model.http
+package com.github.model.bean
 
 /**
  * Created by cuiyue on 2017/6/22.

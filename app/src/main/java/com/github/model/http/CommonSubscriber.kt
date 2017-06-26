@@ -40,7 +40,7 @@ abstract class CommonSubscriber<T> : ResourceSubscriber<T> {
     }
 
     override fun onError(e: Throwable?) {
-
+        LogUtil.d("abc", "onError" + e.toString())
         if (mView == null) {
             return
         }

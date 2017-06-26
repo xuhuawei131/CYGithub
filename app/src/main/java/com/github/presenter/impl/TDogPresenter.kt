@@ -4,7 +4,7 @@ import client.yalantis.com.githubclient.model.TDog
 import com.github.base.RxPresenter
 import com.github.model.http.ApiManager
 import com.github.model.http.CommonSubscriber
-import com.github.model.http.TDogResponse
+import com.github.model.bean.TDogResponse
 import com.github.presenter.contract.TDogContract
 import com.github.util.RxUtil
 

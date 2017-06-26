@@ -1,7 +1,8 @@
 package com.github.util
 
+import com.github.log.LogUtil
 import com.github.model.http.ApiException
-import com.github.model.http.TDogResponse
+import com.github.model.bean.TDogResponse
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
@@ -51,6 +52,9 @@ object RxUtil {
                 emitter.onNext(t)
                 emitter.onComplete()
             } catch (e: Exception) {
+
+                LogUtil.d("abc", "createData---onError>")
+
                 emitter.onError(e)
             }
         }, BackpressureStrategy.BUFFER)

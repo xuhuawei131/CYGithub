@@ -2,6 +2,7 @@ package com.github.presenter.impl
 
 import client.yalantis.com.githubclient.model.Repository
 import com.github.base.RxPresenter
+import com.github.log.LogUtil
 import com.github.model.http.ApiManager
 import com.github.model.http.CommonSubscriber
 import com.github.presenter.contract.RepositoriesContract
@@ -18,11 +19,11 @@ class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), Reposito
     }
 
     override fun loadRepositories() {
-        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE)
-                .compose(RxUtil.rxSchedulerHelper())
+        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "10")
+                .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
                 .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
-                    override fun onNext(t: MutableList<Repository>) {
-                        mView?.showRepositories(t)
+                    override fun onNext(t: MutableList<Repository>?) {
+                        mView?.showRepositories(t!!)
                     }
                 }))
     }

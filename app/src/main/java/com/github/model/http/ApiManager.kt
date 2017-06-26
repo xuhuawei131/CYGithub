@@ -7,6 +7,7 @@ import client.yalantis.com.githubclient.model.TDog
 import com.github.BuildConfig
 import com.github.log.okHttpLog.HttpLoggingInterceptorM
 import com.github.log.okHttpLog.LogInterceptor
+import com.github.model.bean.TDogResponse
 import com.github.util.Utils
 import com.google.gson.GsonBuilder
 import io.reactivex.Flowable
@@ -112,8 +113,8 @@ object ApiManager {
         return GsonConverterFactory.create(builder.create())
     }
 
-    fun loadOrganizationRepos(organizationName: String, reposType: String): Flowable<MutableList<Repository>> {
-        return mApiService.getOrganizationRepos(organizationName, reposType)
+    fun loadOrganizationRepos(organizationName: String, reposType: String, per_page: String): Flowable<MutableList<Repository>> {
+        return mApiService.getOrganizationRepos(organizationName, reposType, per_page)
     }
 
     fun loadRepository(owner: String, name: String): Flowable<RepositoryDetail> {

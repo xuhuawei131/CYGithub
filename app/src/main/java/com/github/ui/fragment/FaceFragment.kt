@@ -1,11 +1,14 @@
 package com.github.ui.fragment
 
+import android.content.Intent
 import client.yalantis.com.githubclient.model.Repository
 import com.github.R
 import com.github.base.BaseFragment
 import com.github.log.LogUtil
 import com.github.presenter.contract.RepositoriesContract
 import com.github.presenter.impl.RepositoriesPresenter
+import com.github.ui.activity.TDogActivity
+import kotlinx.android.synthetic.main.fragment_face.*
 
 /**
  * Created by cuiyue on 2017/6/26.
@@ -18,7 +21,13 @@ class FaceFragment : BaseFragment<RepositoriesContract.View, RepositoriesPresent
     }
 
     override fun initView() {
+
+        tv_face.setOnClickListener {
+            var intent = Intent(mContext, TDogActivity::class.java)
+            startActivity(intent)
+        }
     }
+
 
     override fun initData() {
         mPresenter.loadRepositories()
