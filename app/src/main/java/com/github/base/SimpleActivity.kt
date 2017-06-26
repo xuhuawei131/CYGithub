@@ -12,7 +12,7 @@ import org.greenrobot.eventbus.Subscribe
  */
 abstract class SimpleActivity : SupportActivity() {
 
-    protected val mActivity: Activity = this
+    protected val mActivity = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
