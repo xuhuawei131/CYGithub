@@ -25,9 +25,9 @@ import java.util.concurrent.TimeUnit
  */
 object ApiManager {
 
-//    private val SERVER: String = "https://api.github.com/"
+    private val SERVER: String = "https://api.github.com/"
 
-    private val SERVER: String = "http://www.tngou.net/api/"
+//    private val SERVER: String = "http://www.tngou.net/api/"
 
     private val HTTP_LOG_TAG: String = "abc"
 
