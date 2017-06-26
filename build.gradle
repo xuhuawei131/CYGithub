@@ -17,6 +17,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        //底部导航栏的依赖,需要翻墙
+        maven { url "https://jitpack.io" }
     }
 }
 

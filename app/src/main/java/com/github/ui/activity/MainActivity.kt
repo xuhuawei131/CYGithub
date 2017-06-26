@@ -1,19 +1,11 @@
 package com.github.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import client.yalantis.com.githubclient.model.Owner
-import client.yalantis.com.githubclient.model.Repository
-import client.yalantis.com.githubclient.model.TDog
 import com.github.R
-import com.github.base.BaseActivity
 import com.github.base.SimpleActivity
-import com.github.log.LogUtil
-import com.github.model.http.GitHubResponse
-import com.github.presenter.contract.RepositoriesContract
-import com.github.presenter.impl.RepositoriesPresenter
 import kotlinx.android.synthetic.main.activity_main.*
+import q.rorbin.badgeview.Badge
+import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : SimpleActivity() {
 
@@ -29,10 +21,33 @@ class MainActivity : SimpleActivity() {
     }
 
     override fun initView() {
-        tv.setOnClickListener {
-            var intent = Intent(this, TDogActivity::class.java)
-            startActivity(intent)
-        }
+        initBottomNavigationView()
+    }
+
+    /**
+     * 初始化底部导航栏
+     */
+    private fun initBottomNavigationView() {
+        bnve.enableAnimation(false)
+        bnve.enableShiftingMode(false)
+        bnve.enableItemShiftingMode(false)
+        addBadgeAt(2, 1)
+    }
+
+    /**
+     * 给底部导航栏增加气泡
+     */
+    private fun addBadgeAt(position: Int, number: Int): Badge {
+        // add badge
+        return QBadgeView(this)
+                .setBadgeNumber(number)
+                .setGravityOffset(12F, 2F, true)
+                .bindTarget(bnve.getBottomNavigationItemView(position))
+                .setOnDragStateChangedListener { dragState, badge, targetView ->
+                    if (Badge.OnDragStateChangedListener.STATE_SUCCEED === dragState) {
+                        //清除气泡的回调
+                    }
+                }
     }
 
 }
