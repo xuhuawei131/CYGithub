@@ -19,15 +19,14 @@ import org.greenrobot.eventbus.Subscribe
  */
 abstract class BaseFragment<in V : BaseView, T : BasePresenter<V>> : SupportFragment(), BaseView {
 
-    protected var mContext = null
-    protected var mView = null
+    protected var mContext: Context? = null
 
     protected abstract var mPresenter: T
 
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        mContext = context as Nothing?
+        mContext = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +35,12 @@ abstract class BaseFragment<in V : BaseView, T : BasePresenter<V>> : SupportFrag
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mView = inflater?.inflate(getLayout(), null) as Nothing?
+        var view = inflater?.inflate(getLayout(), null)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val localLayoutParams = activity.window.attributes
             localLayoutParams.flags = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or localLayoutParams.flags
         }
-        return mView
+        return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

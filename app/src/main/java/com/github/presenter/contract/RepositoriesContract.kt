@@ -12,12 +12,9 @@ object RepositoriesContract {
 
     interface View : BaseView {
         fun showRepositories(repositories: MutableList<Repository>)
-
-        fun showTDog(togs: MutableList<TDog>)
     }
 
     interface Presenter : BasePresenter<View> {
         fun loadRepositories()
-        fun loadTDog()
     }
 }
