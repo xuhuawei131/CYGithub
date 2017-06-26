@@ -16,4 +16,11 @@
         app:itemTextColor="@color/selector_item_primary_color"
         app:menu="@menu/menu_navigation_selector" />
 
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bnve" />
+
 </RelativeLayout>

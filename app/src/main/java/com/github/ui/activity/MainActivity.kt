@@ -1,13 +1,23 @@
 package com.github.ui.activity
 
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
+import android.view.MenuItem
 import com.github.R
 import com.github.base.SimpleActivity
+import com.github.log.LogUtil
+import com.github.ui.fragment.FaceFragment
+import com.github.ui.fragment.LampFragment
+import com.github.ui.fragment.WeatherFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import me.yokeyword.fragmentation.SupportFragment
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : SimpleActivity() {
+
+    var mFragments: MutableList<SupportFragment>? = null
+    var mTabPosition: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,10 +28,33 @@ class MainActivity : SimpleActivity() {
     }
 
     override fun initData() {
+
     }
 
     override fun initView() {
         initBottomNavigationView()
+        initFragment()
+    }
+
+    /**
+     * 初始化三个Fragment
+     */
+    private fun initFragment() {
+        mFragments = mutableListOf<SupportFragment>()
+
+        var faceFragment = FaceFragment()
+        var weatherFragment = WeatherFragment()
+        var lampFragment = LampFragment()
+
+        mFragments?.add(faceFragment)
+        mFragments?.add(weatherFragment)
+        mFragments?.add(lampFragment)
+
+        loadMultipleRootFragment(R.id.fl_container, 0,
+                mFragments?.get(0),
+                mFragments?.get(1),
+                mFragments?.get(2))
+
     }
 
     /**
@@ -31,6 +64,16 @@ class MainActivity : SimpleActivity() {
         bnve.enableAnimation(false)
         bnve.enableShiftingMode(false)
         bnve.enableItemShiftingMode(false)
+
+        bnve.setOnNavigationItemSelectedListener {
+            item ->
+            var title = item.title
+            var position = bnve.getMenuItemPosition(item)
+            showHideFragment(mFragments?.get(position), mFragments?.get(mTabPosition))
+            mTabPosition = position
+            true
+        }
+
         addBadgeAt(2, 1)
     }
 

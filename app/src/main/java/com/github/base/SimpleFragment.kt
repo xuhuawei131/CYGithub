@@ -1,6 +1,5 @@
 package com.github.base
 
-import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -18,12 +17,11 @@ import org.greenrobot.eventbus.Subscribe
  */
 abstract class SimpleFragment : SupportFragment() {
 
-    protected var mContext = null
-    protected var mView = null
+    protected var mContext: Context? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-        mContext = context as Nothing?
+        mContext = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +30,12 @@ abstract class SimpleFragment : SupportFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mView = inflater?.inflate(getLayout(), null) as Nothing?
+        var view = inflater?.inflate(getLayout(), null)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val localLayoutParams = activity.window.attributes
             localLayoutParams.flags = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or localLayoutParams.flags
         }
-        return mView
+        return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
