@@ -48,7 +48,6 @@ dependencies {
     compile 'me.yokeyword:fragmentation:0.10.7'
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
-
 }
 repositories {
     mavenCentral()

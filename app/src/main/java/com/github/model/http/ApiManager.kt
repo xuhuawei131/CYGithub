@@ -3,12 +3,12 @@ package com.github.model.http
 
 import client.yalantis.com.githubclient.model.Repository
 import client.yalantis.com.githubclient.model.RepositoryDetail
+import client.yalantis.com.githubclient.model.TDog
 import com.github.BuildConfig
 import com.github.log.okHttpLog.HttpLoggingInterceptorM
 import com.github.log.okHttpLog.LogInterceptor
 import com.github.util.Utils
 import com.google.gson.GsonBuilder
-import com.wingsofts.gankclient.bean.JsonResult
 import io.reactivex.Flowable
 import okhttp3.Cache
 import okhttp3.CacheControl
@@ -25,7 +25,9 @@ import java.util.concurrent.TimeUnit
  */
 object ApiManager {
 
-    private val SERVER: String = "https://api.github.com/"
+//    private val SERVER: String = "https://api.github.com/"
+
+    private val SERVER: String = "http://www.tngou.net/api/"
 
     private val HTTP_LOG_TAG: String = "abc"
 
@@ -116,6 +118,10 @@ object ApiManager {
 
     fun loadRepository(owner: String, name: String): Flowable<RepositoryDetail> {
         return mApiService.getRepository(owner, name)
+    }
+
+    fun loadTDog(): Flowable<TDogResponse<MutableList<TDog>>> {
+        return mApiService.getTDog()
     }
 
 }

@@ -1,14 +1,11 @@
 package com.github.presenter.impl
 
 import client.yalantis.com.githubclient.model.Repository
-import com.github.model.http.CommonSubscriber
+import client.yalantis.com.githubclient.model.TDog
 import com.github.base.RxPresenter
-import com.github.model.http.ApiManager
-import com.github.model.http.GitHubResponse
-import com.github.model.http.MyHttpResponse
+import com.github.model.http.*
 import com.github.presenter.contract.RepositoriesContract
 import com.github.util.RxUtil
-import com.wingsofts.gankclient.bean.JsonResult
 
 /**
  * Created by cuiyue on 2017/6/21.
@@ -26,6 +23,17 @@ class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), Reposito
                 .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
                     override fun onNext(t: MutableList<Repository>) {
                         mView?.showRepositories(t)
+                    }
+                }))
+    }
+
+    override fun loadTDog() {
+        addDisposable(ApiManager.loadTDog()
+                .compose(RxUtil.rxSchedulerHelper<TDogResponse<MutableList<TDog>>>())
+                .compose(RxUtil.handleResult<MutableList<TDog>>())
+                .subscribeWith(object : CommonSubscriber<MutableList<TDog>>(mView!!) {
+                    override fun onNext(t: MutableList<TDog>?) {
+                        mView?.showTDog(t!!)
                     }
                 }))
     }

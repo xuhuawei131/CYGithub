@@ -2,7 +2,7 @@ package com.github.model.http
 
 import client.yalantis.com.githubclient.model.Repository
 import client.yalantis.com.githubclient.model.RepositoryDetail
-import com.wingsofts.gankclient.bean.JsonResult
+import client.yalantis.com.githubclient.model.TDog
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,4 +20,8 @@ interface ApiService {
     @GET(ApiSettings.REPOSITORY)
     fun getRepository(@Path(ApiSettings.PATH_OWNER) owner: String,
                       @Path(ApiSettings.PATH_REPO) name: String): Flowable<RepositoryDetail>
+
+
+    @GET("top/classify")
+    fun getTDog(): Flowable<TDogResponse<MutableList<TDog>>>
 }

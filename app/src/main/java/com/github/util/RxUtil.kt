@@ -1,17 +1,12 @@
 package com.github.util
 
-import android.os.Handler
-import android.os.Message
-import com.github.log.LogUtil
 import com.github.model.http.ApiException
-import com.github.model.http.GitHubResponse
-import com.github.model.http.MyHttpResponse
-import com.wingsofts.gankclient.bean.JsonResult
-import io.reactivex.*
+import com.github.model.http.TDogResponse
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Publisher
 
 /**
  * Created by cuiyue on 2017/6/22.
@@ -29,15 +24,16 @@ object RxUtil {
         }
     }
 
-    fun <T> handleResult(): FlowableTransformer<JsonResult<T>, T> {
-        return FlowableTransformer<JsonResult<T>, T> {
+    /**
+     * 处理天狗API返回结果
+     */
+    fun <T> handleResult(): FlowableTransformer<TDogResponse<T>, T> {
+        return FlowableTransformer<TDogResponse<T>, T> {
             it.flatMap {
-                if (it.results == null) {
-                    LogUtil.d("abc", "服务器返回error")
-                    Flowable.error(ApiException("服务器返回error"));
+                if (it.status) {
+                    createData(it.tngou)
                 } else {
-                    LogUtil.d("abc", "createData")
-                    createData(it.results)
+                    Flowable.error(ApiException("服务器返回error"));
                 }
             }
         }
@@ -54,9 +50,7 @@ object RxUtil {
             try {
                 emitter.onNext(t)
                 emitter.onComplete()
-                LogUtil.d("abc", "createData--onNext")
             } catch (e: Exception) {
-                LogUtil.d("abc", "createData--onError")
                 emitter.onError(e)
             }
         }, BackpressureStrategy.BUFFER)

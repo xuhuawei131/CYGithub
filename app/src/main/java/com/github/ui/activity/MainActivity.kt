@@ -1,21 +1,21 @@
 package com.github.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import client.yalantis.com.githubclient.model.Owner
 import client.yalantis.com.githubclient.model.Repository
+import client.yalantis.com.githubclient.model.TDog
 import com.github.R
 import com.github.base.BaseActivity
+import com.github.base.SimpleActivity
 import com.github.log.LogUtil
 import com.github.model.http.GitHubResponse
 import com.github.presenter.contract.RepositoriesContract
 import com.github.presenter.impl.RepositoriesPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<RepositoriesContract.View, RepositoriesPresenter>(), RepositoriesContract.View {
-
-
-    override var mPresenter: RepositoriesPresenter = RepositoriesPresenter()
+class MainActivity : SimpleActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,35 +25,14 @@ class MainActivity : BaseActivity<RepositoriesContract.View, RepositoriesPresent
         return R.layout.activity_main
     }
 
-    override fun initView() {
-        tv.setText("hahaha")
-    }
-
     override fun initData() {
-        mPresenter.loadRepositories()
     }
 
-    override fun showProgress() {
+    override fun initView() {
+        tv.setOnClickListener {
+            var intent = Intent(this, TDogActivity::class.java)
+            startActivity(intent)
+        }
     }
-
-    override fun hideProgress() {
-    }
-
-    override fun showRepositories(repositories: MutableList<Repository>) {
-        LogUtil.d("abc", "showRepositories-->" + repositories.size)
-
-    }
-
-    override fun showError() {
-        LogUtil.d("abc", "showError-->")
-    }
-
-    override fun showErrorMsg(msg: String) {
-        LogUtil.d("abc", "showErrorMsg-->" + msg)
-    }
-
-    override fun showEmpty() {
-    }
-
 
 }

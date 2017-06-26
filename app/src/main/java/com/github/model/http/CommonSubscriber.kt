@@ -36,9 +36,6 @@ abstract class CommonSubscriber<T> : ResourceSubscriber<T> {
         this.isShowErrorState = isShowErrorState
     }
 
-    override fun onNext(t: T) {
-    }
-
     override fun onComplete() {
     }
 
