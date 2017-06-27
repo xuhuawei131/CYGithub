@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex
 import com.github.BuildConfig
 import com.github.log.LogUtil
 import com.github.util.Utils
+import com.squareup.leakcanary.LeakCanary
 import kotlin.properties.Delegates
 
 /**
@@ -27,11 +28,15 @@ class App : Application() {
         if (isApplicationRepeat) {
             return
         }
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
         instance = this
         //初始化Logger的TAG
         LogUtil.init(BuildConfig.DEBUG)
         // dex突破65535的限制
         MultiDex.install(this)
+        LeakCanary.install(this);
     }
 
     /**
