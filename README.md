@@ -2,7 +2,7 @@
 一款基于kotlin语言开发,用mvp okhttp retrofit rxjava eventbus等众多开源框架的一款App
 
 # 项目演示
-![image](https://github.com/cuiyue1988/dogblood/blob/master/image/video.gif)
+![image](https://github.com/cuiyue1988/CYGithub/blob/master/video/video.mp4)
 
 # 第三方库
 全体CV战士向开源大神敬礼
