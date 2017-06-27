@@ -7,6 +7,9 @@ import com.github.model.http.ApiManager
 import com.github.model.http.CommonSubscriber
 import com.github.presenter.contract.RepositoriesContract
 import com.github.util.RxUtil
+import android.R.attr.delay
+import android.os.Handler
+
 
 /**
  * Created by cuiyue on 2017/6/21.
@@ -23,13 +26,22 @@ class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), Reposito
     }
 
     override fun loadRepositories() {
-        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "1", NUM_OF_PAGE)
-                .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
-                .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
-                    override fun onNext(t: MutableList<Repository>?) {
-                        mView?.showRepositories(t!!)
-                    }
-                }))
+        mView?.showProgress()
+
+        Handler().postDelayed({
+
+            addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "1", NUM_OF_PAGE)
+                    .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
+                    .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
+                        override fun onNext(t: MutableList<Repository>?) {
+                            mView?.showRepositories(t!!)
+                            mView?.hideProgress()
+                        }
+                    }))
+
+        }, 1500)
+
+
     }
 
     override fun loadRefreshRepositories() {

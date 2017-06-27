@@ -1,6 +1,7 @@
 package com.github.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import android.widget.Toast
 import client.yalantis.com.githubclient.model.Repository
 import com.github.R
@@ -36,9 +37,11 @@ class FaceFragment : BaseFragment<RepositoriesContract.View, RepositoriesPresent
     }
 
     override fun showProgress() {
+        progress.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        progress.visibility = View.GONE
     }
 
     override fun showError() {
