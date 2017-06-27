@@ -113,8 +113,8 @@ object ApiManager {
         return GsonConverterFactory.create(builder.create())
     }
 
-    fun loadOrganizationRepos(organizationName: String, reposType: String, per_page: String): Flowable<MutableList<Repository>> {
-        return mApiService.getOrganizationRepos(organizationName, reposType, per_page)
+    fun loadOrganizationRepos(organizationName: String, reposType: String, page: String, per_page: String): Flowable<MutableList<Repository>> {
+        return mApiService.getOrganizationRepos(organizationName, reposType, page, per_page)
     }
 
     fun loadRepository(owner: String, name: String): Flowable<RepositoryDetail> {

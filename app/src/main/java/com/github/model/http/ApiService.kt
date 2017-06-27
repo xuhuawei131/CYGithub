@@ -16,7 +16,7 @@ interface ApiService {
 
     @GET(ApiSettings.ORGANIZATION_REPOS)
     fun getOrganizationRepos(@Path(ApiSettings.PATH_ORGANIZATION) organizationName: String,
-                             @Query(ApiSettings.PARAM_REPOS_TYPE) reposType: String, @Query(ApiSettings.PER_PAGE) per_page: String): Flowable<MutableList<Repository>>
+                             @Query(ApiSettings.PARAM_REPOS_TYPE) reposType: String, @Query(ApiSettings.PAGE) page: String, @Query(ApiSettings.PER_PAGE) per_page: String): Flowable<MutableList<Repository>>
 
     @GET(ApiSettings.REPOSITORY)
     fun getRepository(@Path(ApiSettings.PATH_OWNER) owner: String,

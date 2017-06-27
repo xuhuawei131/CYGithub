@@ -14,12 +14,12 @@ import com.github.util.RxUtil
 class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), RepositoriesContract.Presenter {
 
     companion object {
-        private const val ORGANIZATION_NAME = "Yalantis"
+        private const val ORGANIZATION_NAME = "kotlin"
         private const val REPOS_TYPE = "public"
     }
 
     override fun loadRepositories() {
-        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "10")
+        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "1", "10")
                 .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
                 .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
                     override fun onNext(t: MutableList<Repository>?) {

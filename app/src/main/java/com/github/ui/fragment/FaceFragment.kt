@@ -72,7 +72,7 @@ class FaceFragment : BaseFragment<RepositoriesContract.View, RepositoriesPresent
 
     override fun showRepositories(repositories: MutableList<Repository>) {
         mRepositorys = repositories
-        mAdapter?.addRepositories(repositories)
+        mAdapter?.addRepositories(mRepositorys!!)
         mAdapter?.notifyDataSetChanged()
         xrecyclerview.refreshComplete()
     }
