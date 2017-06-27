@@ -22,12 +22,10 @@ open class RxPresenter<T : BaseView> : BasePresenter<T> {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = CompositeDisposable()
         }
-        mCompositeDisposable!!.add(disposable)
+        mCompositeDisposable?.add(disposable)
     }
 
     fun unDisposable() {
-        if (mCompositeDisposable == null) {
-            mCompositeDisposable!!.clear()
-        }
+        mCompositeDisposable?.clear()
     }
 }

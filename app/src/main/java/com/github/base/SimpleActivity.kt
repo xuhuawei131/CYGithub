@@ -2,7 +2,9 @@ package com.github.base
 
 import android.app.Activity
 import android.os.Bundle
+import com.github.R
 import com.github.event.DummyEvent
+import com.jaeger.library.StatusBarUtil
 import me.yokeyword.fragmentation.SupportActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -17,6 +19,7 @@ abstract class SimpleActivity : SupportActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
+        setStatusBar()
         App.instance.addActivity(mActivity)
         EventBus.getDefault().register(mActivity)
         initView()
@@ -27,6 +30,13 @@ abstract class SimpleActivity : SupportActivity() {
         super.onDestroy()
         EventBus.getDefault().unregister(mActivity)
         App.instance.removeActivity(mActivity)
+    }
+
+    /**
+     * 设置状态栏
+     */
+    protected fun setStatusBar() {
+        StatusBarUtil.setColor(this, resources.getColor(R.color.colorPrimary))
     }
 
     /**

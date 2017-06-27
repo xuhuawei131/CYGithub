@@ -56,8 +56,7 @@ class FaceFragment : BaseFragment<RepositoriesContract.View, RepositoriesPresent
      */
     private fun initXRecyclerview() {
         mAdapter = GitHubListAdapter(ArrayList<Repository>(), {
-            startActivity(RepositoryDetailActivity.newIntent(activity, it.name))
-
+            startActivity(RepositoryDetailActivity.newIntent(activity, it.html_url))
         })
         xrecyclerview.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         xrecyclerview.adapter = mAdapter
