@@ -13,13 +13,17 @@ import com.github.util.RxUtil
  */
 class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), RepositoriesContract.Presenter {
 
+
+    private val NUM_OF_PAGE = "10"
+    private var mCurrentPage = 1
+
     companion object {
         private const val ORGANIZATION_NAME = "kotlin"
         private const val REPOS_TYPE = "public"
     }
 
     override fun loadRepositories() {
-        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "1", "10")
+        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "1", NUM_OF_PAGE)
                 .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
                 .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
                     override fun onNext(t: MutableList<Repository>?) {
@@ -27,6 +31,29 @@ class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), Reposito
                     }
                 }))
     }
+
+    override fun loadRefreshRepositories() {
+        mCurrentPage = 1
+        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, mCurrentPage.toString(), NUM_OF_PAGE)
+                .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
+                .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
+                    override fun onNext(t: MutableList<Repository>?) {
+                        mView?.showRefreshRepositories(t!!)
+                    }
+                }))
+    }
+
+    override fun loadMoreRepositories() {
+        mCurrentPage++
+        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, mCurrentPage.toString(), NUM_OF_PAGE)
+                .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
+                .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
+                    override fun onNext(t: MutableList<Repository>?) {
+                        mView?.showMoreRepositories(t!!)
+                    }
+                }))
+    }
+
 
 }
 

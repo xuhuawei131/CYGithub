@@ -36,7 +36,9 @@ class GitHubListAdapter(private val repositories: MutableList<Repository>,
         }
     }
 
-    fun addRepositories(newRepositories: List<Repository>) {
+    fun setData(newRepositories: List<Repository>) {
+        repositories.clear()
         repositories.addAll(newRepositories)
     }
+
 }

@@ -1,6 +1,7 @@
 package com.github.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import client.yalantis.com.githubclient.model.Repository
 import com.github.R
 import com.github.base.BaseFragment
@@ -59,22 +60,51 @@ class FaceFragment : BaseFragment<RepositoriesContract.View, RepositoriesPresent
         xrecyclerview.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         xrecyclerview.adapter = mAdapter
         xrecyclerview.setLoadingListener(object : XRecyclerView.LoadingListener {
-            override fun onLoadMore() {
-                xrecyclerview.loadMoreComplete()
+            override fun onRefresh() {
+                mPresenter.loadRefreshRepositories()
             }
 
-            override fun onRefresh() {
-                mRepositorys?.clear()
-                mPresenter.loadRepositories()
+            override fun onLoadMore() {
+                mPresenter.loadMoreRepositories()
             }
         })
     }
 
+    /**
+     * 加载数据回调
+     */
     override fun showRepositories(repositories: MutableList<Repository>) {
         mRepositorys = repositories
-        mAdapter?.addRepositories(mRepositorys!!)
+        mAdapter?.setData(mRepositorys!!)
+        mAdapter?.notifyDataSetChanged()
+    }
+
+    /**
+     * 下拉刷新数据回调
+     */
+    override fun showRefreshRepositories(repositories: MutableList<Repository>) {
+        mRepositorys?.clear()
+        mRepositorys = repositories
+        mAdapter?.setData(mRepositorys!!)
         mAdapter?.notifyDataSetChanged()
         xrecyclerview.refreshComplete()
+    }
+
+    /**
+     * 上拉加载更多数据回调
+     */
+    override fun showMoreRepositories(repositories: MutableList<Repository>) {
+
+        if (repositories.isEmpty()) {
+            Toast.makeText(mContext, "亲,没有更多数据了", Toast.LENGTH_SHORT).show()
+            xrecyclerview.loadMoreComplete()
+            return
+        }
+
+        mRepositorys?.addAll(repositories)
+        mAdapter?.setData(mRepositorys!!)
+        mAdapter?.notifyDataSetChanged()
+        xrecyclerview.loadMoreComplete()
     }
 
 }
