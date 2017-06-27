@@ -26,7 +26,7 @@
 ### 微信扫我
 ![image](https://github.com/cuiyue1988/dogblood/blob/master/image/weixinpay.png)
 
-# 另外封装了网络请求统一处理 "RxUtil"
+# 另外为了模拟真实开发封装了网络请求统一处理 "RxUtil"
 感谢天狗提供的网络数据 http://www.tngou.net/
 
 # 免责声明
