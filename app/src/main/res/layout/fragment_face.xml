@@ -6,12 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.github.ui.activity.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_face"
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/face"
-        android:textSize="23dp" />
+        android:layout_marginBottom="5dp" />
 
 </RelativeLayout>
