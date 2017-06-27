@@ -1,12 +1,18 @@
 package com.github.ui.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import client.yalantis.com.githubclient.model.Repository
 import com.github.R
 import kotlinx.android.synthetic.main.item_repository.view.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import javax.xml.datatype.DatatypeConstants.SECONDS
+import com.jakewharton.rxbinding2.view.RxView
+import java.util.concurrent.TimeUnit
+
 
 class GitHubListAdapter(private val repositories: MutableList<Repository>,
                         val onClick: (Repository) -> Unit)
@@ -31,7 +37,14 @@ class GitHubListAdapter(private val repositories: MutableList<Repository>,
             with(repository) {
                 itemView.text_view_title.text = name
                 itemView.text_view_description.text = description
-                itemView.setOnClickListener { onClick(this) }
+
+                RxView.clicks(itemView)//1秒钟之内禁用重复点击
+                        .throttleFirst(1, TimeUnit.SECONDS)
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            onClick(this)
+                        }
+
             }
         }
     }
