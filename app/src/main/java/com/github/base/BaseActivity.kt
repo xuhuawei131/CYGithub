@@ -2,7 +2,9 @@ package com.github.base
 
 import android.app.Activity
 import android.os.Bundle
+import com.github.R
 import com.github.event.DummyEvent
+import com.jaeger.library.StatusBarUtil
 import me.yokeyword.fragmentation.SupportActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -19,6 +21,7 @@ abstract class BaseActivity<in V : BaseView, T : BasePresenter<V>> : SupportActi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
+        setStatusBar()
         App.instance.addActivity(mActivity)
         EventBus.getDefault().register(mActivity)
         mPresenter.attachView(this as V)
@@ -31,6 +34,13 @@ abstract class BaseActivity<in V : BaseView, T : BasePresenter<V>> : SupportActi
         App.instance.removeActivity(mActivity)
         EventBus.getDefault().unregister(mActivity)
         mPresenter.detachView()
+    }
+
+    /**
+     * 设置状态栏
+     */
+    protected fun setStatusBar() {
+        StatusBarUtil.setColor(this, resources.getColor(R.color.colorPrimary))
     }
 
     /**
