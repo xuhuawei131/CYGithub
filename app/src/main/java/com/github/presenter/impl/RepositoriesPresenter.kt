@@ -27,21 +27,14 @@ class RepositoriesPresenter : RxPresenter<RepositoriesContract.View>(), Reposito
 
     override fun loadRepositories() {
         mView?.showProgress()
-
-        Handler().postDelayed({
-
-            addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "1", NUM_OF_PAGE)
-                    .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
-                    .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
-                        override fun onNext(t: MutableList<Repository>?) {
-                            mView?.showRepositories(t!!)
-                            mView?.hideProgress()
-                        }
-                    }))
-
-        }, 1500)
-
-
+        addDisposable(ApiManager.loadOrganizationRepos(ORGANIZATION_NAME, REPOS_TYPE, "1", NUM_OF_PAGE)
+                .compose(RxUtil.rxSchedulerHelper<MutableList<Repository>>())
+                .subscribeWith(object : CommonSubscriber<MutableList<Repository>>(mView!!) {
+                    override fun onNext(t: MutableList<Repository>?) {
+                        mView?.hideProgress()
+                        mView?.showRepositories(t!!)
+                    }
+                }))
     }
 
     override fun loadRefreshRepositories() {

@@ -9,6 +9,7 @@ import com.github.base.BaseFragment
 import com.github.log.LogUtil
 import com.github.presenter.contract.RepositoriesContract
 import com.github.presenter.impl.RepositoriesPresenter
+import com.github.ui.activity.RepositoryDetailActivity
 import com.github.ui.adapter.GitHubListAdapter
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import kotlinx.android.synthetic.main.fragment_face.*
@@ -58,7 +59,8 @@ class FaceFragment : BaseFragment<RepositoriesContract.View, RepositoriesPresent
      */
     private fun initXRecyclerview() {
         mAdapter = GitHubListAdapter(ArrayList<Repository>(), {
-            LogUtil.a("abc", "name---->" + it.name)
+            startActivity(RepositoryDetailActivity.newIntent(activity, it.name))
+
         })
         xrecyclerview.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         xrecyclerview.adapter = mAdapter
