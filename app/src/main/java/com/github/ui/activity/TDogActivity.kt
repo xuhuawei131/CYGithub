@@ -11,9 +11,7 @@ class TDogActivity : BaseActivity<TDogContract.View, TDogPresenter>(), TDogContr
 
     override var mPresenter: TDogPresenter = TDogPresenter()
 
-    override fun getLayout(): Int {
-        return R.layout.activity_tdog
-    }
+    override fun getLayout(): Int = R.layout.activity_tdog
 
     override fun initView() {
     }

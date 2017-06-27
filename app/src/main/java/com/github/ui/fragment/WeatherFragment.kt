@@ -7,9 +7,7 @@ import com.github.base.SimpleFragment
  * Created by cuiyue on 2017/6/26.
  */
 class WeatherFragment : SimpleFragment() {
-    override fun getLayout(): Int {
-        return R.layout.fragment_weather
-    }
+    override fun getLayout(): Int = R.layout.fragment_weather
 
     override fun initView() {
     }

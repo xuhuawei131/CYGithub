@@ -24,12 +24,9 @@ class FaceFragment : BaseFragment<RepositoriesContract.View, RepositoriesPresent
     private var mAdapter: GitHubListAdapter? = null
     private var mRepositorys: MutableList<Repository>? = null
 
-    override fun getLayout(): Int {
-        return R.layout.fragment_face
-    }
+    override fun getLayout(): Int = R.layout.fragment_face
 
     override fun initView() {
-
         initXRecyclerview()
     }
 

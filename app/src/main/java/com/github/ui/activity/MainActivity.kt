@@ -19,13 +19,7 @@ class MainActivity : SimpleActivity() {
     var mFragments: MutableList<SupportFragment>? = null
     var mTabPosition: Int = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayout(): Int = R.layout.activity_main
 
     override fun initData() {
 
